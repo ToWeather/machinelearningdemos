@@ -56,7 +56,7 @@ class GMMClust():
         # running the EM algorithm for GMM
         pre_L = 0
         iter_cnt = 0
-        while iter_cnt <= self.max_iter:
+        while iter_cnt < self.max_iter:
             iter_cnt += 1
             crt_L = 0
             # E step
@@ -95,7 +95,7 @@ class GMMClust():
         if kind == 1:
             y = self.pred_label
         plt.scatter(self.data_set[:, 0], self.data_set[:, 1],
-                    c=y, alpha=0.8)
+                    c=y, alpha=0.6)
         if kind == 1:
             plt.scatter(self.means[:, 0], self.means[:, 1],
                         c='r', marker='x')
@@ -114,8 +114,9 @@ if __name__ == '__main__':
     # running the GMM clustering
     gmm_cluster = GMMClust(n_components=3)
     gmm_cluster.predict(X)
-    correct_rate = sum(gmm_cluster.pred_label == y) / n_samples
-    print("the rate of the correctly predicted samples: %.4f" % correct_rate)
+    for i in range(3):
+        print("cluster %s" % i)
+        print("    mean: %s, covariance: %s" %(gmm_cluster.means[i], gmm_cluster.covars[i]))
     # plotting the clustering result
     plt.subplot(1, 2, 1)
     gmm_cluster.plot_clustering(kind=0, y=y, title='The Original Dataset')
